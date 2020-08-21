@@ -20,19 +20,23 @@ router
     try {
       const {
         mongo: { Events },
-        body: { title, start, end },
+        body: { title, start, end, reccuringDates},
       } = req;
       if (!title) throw new Error('Required field "title" missing.');
       if (!start) throw new Error('Required field "start" missing.');
       if (!end) throw new Error('Required field "end" missing.');
       // Create new event doc and respond with it to keep things snappy
-      const newEventDoc = {
+      console.log(reccuringDates);
+        const newEventDoc = {
         title,
         start: new Date(start),
         end: new Date(end),
       };
+
+      let NewEvent = await Events.insertOne(newEventDoc);
+      newEventDoc.id = NewEvent.insertedId;
+      console.log(newEventDoc);
       res.json(newEventDoc);
-      await Events.insertOne(newEventDoc);
     } catch (e) {
       next(e);
     }

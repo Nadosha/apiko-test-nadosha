@@ -25,7 +25,7 @@ module.exports = {
         // Array of loaders
         use: ['style-loader', 'css-loader', 'less-loader'],
         exclude: /node_modules/,
-      },
+      }
     ],
   },
   plugins: [
